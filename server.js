@@ -49,6 +49,12 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+let nextId = 7;
+
+function getNextId() {
+  return nextId++;
+}
+
 function authenticator(req, res, next) {
   const { authorization } = req.headers;
   if (authorization === token) {
@@ -95,8 +101,16 @@ app.get('/api/friends/:id', authenticator, (req, res) => {
   }
 });
 
+app.post('/api/friends', authenticator, (req, res) => {
+  const friend = { id: getNextId(), ...req.body };
+
+  friends = [...friends, friend];
+
+  res.send(friends);
+});
+
 app.get('/api/', (req, res) => {
-  res.status(200).json({status: "served"});
+  res.status(200).json({ status: "served" });
 });
 
 app.listen(port, () => {
