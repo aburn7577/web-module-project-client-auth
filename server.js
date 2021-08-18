@@ -110,7 +110,7 @@ app.post('/api/friends', authenticator, (req, res) => {
 });
 
 app.get('/api/', (req, res) => {
-  res.status(200).json({status: "served"});
+  res.status(200).json({ status: "served" });
 });
 
 app.listen(port, () => {
